@@ -28,6 +28,9 @@ function App() {
   const numberOfTasksLeft = tasks.filter((task) => task.done == false).length;
 
   const handleEnter = (e: KeyboardEvent) => {
+    if (newTask === '') {
+      return;
+    }
     if (e.key === 'Enter') {
       e.preventDefault();
       setNewTask('');

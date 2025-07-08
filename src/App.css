@@ -27,7 +27,6 @@ button:hover {
   border: black 0.5px solid;
 }
 .input-wrapper {
-  box-sizing: border-box;
   border-bottom: black 0.5px solid;
   box-shadow: 0 0.1rem rgba(132, 132, 132, 0.25);
   display: flex;
@@ -36,16 +35,15 @@ button:hover {
   padding-right: 10px;
 }
 .input {
-  box-sizing: border-box;
   width: 90%;
   border: none;
   font-size: xx-large;
   outline: none;
   padding: 15px;
-  font-style: italic;
 }
 .input::placeholder {
   opacity: 0.2;
+  font-style: italic;
 }
 .arrow-button {
   border: none;
