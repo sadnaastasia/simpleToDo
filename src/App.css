@@ -37,6 +37,7 @@ button:hover {
 }
 .input {
   box-sizing: border-box;
+  width: 90%;
   border: none;
   font-size: xx-large;
   outline: none;
