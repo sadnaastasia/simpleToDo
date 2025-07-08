@@ -14,7 +14,12 @@ function Task({ id, text, done }: { id: number; text: string; done: boolean }) {
   };
   return (
     <div className={`task ${hide ? 'task-hide' : ''}`} onClick={handleClick}>
-      <input type="radio" className="task_input" checked={checked} />
+      <input
+        id={id.toString()}
+        type="radio"
+        className="task_input"
+        checked={checked}
+      />
       <label className={`task_label ${checked ? 'task_label-crossed' : ''}`}>
         {text}
       </label>

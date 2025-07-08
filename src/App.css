@@ -19,11 +19,11 @@ button:hover {
   font-weight: 300;
 }
 .todo {
-  width: 50%;
+  width: 60%;
   display: flex;
   flex-direction: column;
   padding: 0;
-  margin: 0;
+  padding-right: 0;
   border: black 0.5px solid;
 }
 .input-wrapper {
@@ -51,6 +51,7 @@ button:hover {
 .arrow-button_svg {
   height: 1.5rem;
   width: 1.5rem;
+  stroke: black;
 }
 .control-bar {
   display: flex;
@@ -133,15 +134,21 @@ button:hover {
   }
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 450px) {
   .todo {
     width: 85%;
-    padding-right: 5px;
   }
   .input {
     font-size: medium;
   }
   .task_label {
     font-size: small;
+  }
+  .control-bar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: space-between;
+    padding: 15px;
   }
 }
