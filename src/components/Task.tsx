@@ -13,14 +13,18 @@ function Task({ id, text, done }: { id: number; text: string; done: boolean }) {
     dispatch(markDone(id));
   };
   return (
-    <div className={`task ${hide ? 'task-hide' : ''}`} onClick={handleClick}>
+    <div className={`task ${hide ? 'task-hide' : ''}`}>
       <input
         id={id.toString()}
         type="radio"
         className="task_input"
         checked={checked}
+        onClick={handleClick}
       />
-      <label className={`task_label ${checked ? 'task_label-crossed' : ''}`}>
+      <label
+        htmlFor={id.toString()}
+        className={`task_label ${checked ? 'task_label-crossed' : ''}`}
+      >
         {text}
       </label>
     </div>
