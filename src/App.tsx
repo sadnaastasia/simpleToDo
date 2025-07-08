@@ -74,6 +74,7 @@ function App() {
             )}
           </button>
           <input
+            id="input"
             value={newTask}
             onChange={(e) => setNewTask(e.target.value)}
             className="input"

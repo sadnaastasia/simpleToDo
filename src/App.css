@@ -40,6 +40,7 @@ button:hover {
   outline: none;
   padding: 15px;
   font-style: italic;
+  margin-right: 5px;
 }
 .input::placeholder {
   opacity: 0.2;
@@ -51,7 +52,7 @@ button:hover {
 .arrow-button_svg {
   height: 1.5rem;
   width: 1.5rem;
-  stroke: black;
+  fill: black;
 }
 .control-bar {
   display: flex;
