@@ -44,6 +44,7 @@ button:hover {
 }
 .input::placeholder {
   opacity: 0.2;
+  padding-right: 0;
 }
 .arrow-button {
   border: none;
