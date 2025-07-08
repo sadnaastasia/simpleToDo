@@ -75,6 +75,7 @@ button:hover {
   padding: 5px;
   margin-left: 5px;
   margin-right: 5px;
+  color: black;
 }
 .control-bar_button:hover {
   border: black 1px solid;
@@ -126,5 +127,21 @@ button:hover {
   }
   .input {
     font-size: large;
+  }
+  .task_label {
+    font-size: medium;
+  }
+}
+
+@media (max-width: 1000px) {
+  .todo {
+    width: 85%;
+    padding-right: 5px;
+  }
+  .input {
+    font-size: medium;
+  }
+  .task_label {
+    font-size: small;
   }
 }
