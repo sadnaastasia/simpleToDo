@@ -34,17 +34,16 @@ button:hover {
   padding-left: 10px;
 }
 .input {
-  flex-grow: 1;
+  flex: 1;
   border: none;
   font-size: xx-large;
   outline: none;
   padding: 15px;
   font-style: italic;
-  border-right: black 0.5px solid;
 }
 .input::placeholder {
   opacity: 0.2;
-  padding-right: 0;
+  padding-right: 50px;
 }
 .arrow-button {
   border: none;
