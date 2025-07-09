@@ -1,6 +1,14 @@
 import { render, screen } from '@testing-library/react';
 import AppWrapper from './AppWrapper';
-import { addTask, deleteDoneTasks, markDone } from './store';
+import {
+  addTask,
+  deleteDoneTasks,
+  hide,
+  markDone,
+  showActive,
+  showAll,
+  showCompleted,
+} from './store';
 import { tasksSlice } from './store';
 
 describe('App', () => {
@@ -9,7 +17,7 @@ describe('App', () => {
     const headerElement = screen.getByText(/todos/i);
     expect(headerElement).toBeInTheDocument();
   });
-  it('add task', () => {
+  test('add task', () => {
     const initialState = {
       tasks: [],
       value: 0,
@@ -17,47 +25,47 @@ describe('App', () => {
       typeOfFilter: 'all',
       hide: false,
     };
-    const task = { id: 1, text: 'Hi', done: false };
+    const task = { id: 1, text: 'Task 1', done: false };
     const action = addTask(task);
     const nextState = tasksSlice.reducer(initialState, action);
     expect(nextState).toEqual({
-      tasks: [{ id: 1, text: 'Hi', done: false }],
+      tasks: [{ id: 1, text: 'Task 1', done: false }],
       value: 1,
-      filteredTasks: [{ id: 1, text: 'Hi', done: false }],
+      filteredTasks: [{ id: 1, text: 'Task 1', done: false }],
       typeOfFilter: 'all',
       hide: false,
     });
   });
-  it('mark task done', () => {
+  test('mark task done', () => {
     const initialState = {
-      tasks: [{ id: 1, text: 'Hi', done: false }],
+      tasks: [{ id: 1, text: 'Task 1', done: false }],
       value: 1,
-      filteredTasks: [{ id: 1, text: 'Hi', done: false }],
+      filteredTasks: [{ id: 1, text: 'Task 1', done: false }],
       typeOfFilter: 'all',
       hide: false,
     };
     const action = markDone(1);
     const nextState = tasksSlice.reducer(initialState, action);
     expect(nextState).toEqual({
-      tasks: [{ id: 1, text: 'Hi', done: true }],
+      tasks: [{ id: 1, text: 'Task 1', done: true }],
       value: 1,
-      filteredTasks: [{ id: 1, text: 'Hi', done: true }],
+      filteredTasks: [{ id: 1, text: 'Task 1', done: true }],
       typeOfFilter: 'all',
       hide: false,
     });
   });
-  it('delete done tasks', () => {
+  test('delete done tasks', () => {
     const initialState = {
       tasks: [
-        { id: 1, text: 'Hi', done: true },
-        { id: 2, text: 'Hi2', done: true },
-        { id: 3, text: 'Hi3', done: false },
+        { id: 1, text: 'Task 1', done: true },
+        { id: 2, text: 'Task 2', done: true },
+        { id: 3, text: 'Task 3', done: false },
       ],
       value: 3,
       filteredTasks: [
-        { id: 1, text: 'Hi', done: true },
-        { id: 2, text: 'Hi2', done: true },
-        { id: 3, text: 'Hi3', done: false },
+        { id: 1, text: 'Task 1', done: true },
+        { id: 2, text: 'Task 2', done: true },
+        { id: 3, text: 'Task 3', done: false },
       ],
       typeOfFilter: 'all',
       hide: false,
@@ -65,11 +73,142 @@ describe('App', () => {
     const action = deleteDoneTasks();
     const nextState = tasksSlice.reducer(initialState, action);
     expect(nextState).toEqual({
-      tasks: [{ id: 3, text: 'Hi3', done: false }],
+      tasks: [{ id: 3, text: 'Task 3', done: false }],
       value: 1,
-      filteredTasks: [{ id: 3, text: 'Hi3', done: false }],
+      filteredTasks: [{ id: 3, text: 'Task 3', done: false }],
       typeOfFilter: 'all',
       hide: false,
+    });
+  });
+  test('show all tasks', () => {
+    const initialState = {
+      tasks: [
+        { id: 1, text: 'Task 1', done: true },
+        { id: 2, text: 'Task 2', done: true },
+        { id: 3, text: 'Task 3', done: false },
+      ],
+      value: 3,
+      filteredTasks: [
+        { id: 1, text: 'Task 1', done: true },
+        { id: 2, text: 'Task 2', done: true },
+        { id: 3, text: 'Task 3', done: false },
+      ],
+      typeOfFilter: 'all',
+      hide: false,
+    };
+    const action = showAll();
+    const nextState = tasksSlice.reducer(initialState, action);
+    expect(nextState).toEqual({
+      tasks: [
+        { id: 1, text: 'Task 1', done: true },
+        { id: 2, text: 'Task 2', done: true },
+        { id: 3, text: 'Task 3', done: false },
+      ],
+      value: 3,
+      filteredTasks: [
+        { id: 1, text: 'Task 1', done: true },
+        { id: 2, text: 'Task 2', done: true },
+        { id: 3, text: 'Task 3', done: false },
+      ],
+      typeOfFilter: 'all',
+      hide: false,
+    });
+  });
+  test('show active tasks', () => {
+    const initialState = {
+      tasks: [
+        { id: 1, text: 'Task 1', done: true },
+        { id: 2, text: 'Task 2', done: true },
+        { id: 3, text: 'Task 3', done: false },
+      ],
+      value: 3,
+      filteredTasks: [
+        { id: 1, text: 'Task 1', done: true },
+        { id: 2, text: 'Task 2', done: true },
+        { id: 3, text: 'Task 3', done: false },
+      ],
+      typeOfFilter: 'all',
+      hide: false,
+    };
+    const action = showActive();
+    const nextState = tasksSlice.reducer(initialState, action);
+    expect(nextState).toEqual({
+      tasks: [
+        { id: 1, text: 'Task 1', done: true },
+        { id: 2, text: 'Task 2', done: true },
+        { id: 3, text: 'Task 3', done: false },
+      ],
+      value: 3,
+      filteredTasks: [{ id: 3, text: 'Task 3', done: false }],
+      typeOfFilter: 'active',
+      hide: false,
+    });
+  });
+  test('show completed tasks', () => {
+    const initialState = {
+      tasks: [
+        { id: 1, text: 'Task 1', done: true },
+        { id: 2, text: 'Task 2', done: true },
+        { id: 3, text: 'Task 3', done: false },
+      ],
+      value: 3,
+      filteredTasks: [
+        { id: 1, text: 'Task 1', done: true },
+        { id: 2, text: 'Task 2', done: true },
+        { id: 3, text: 'Task 3', done: false },
+      ],
+      typeOfFilter: 'all',
+      hide: false,
+    };
+    const action = showCompleted();
+    const nextState = tasksSlice.reducer(initialState, action);
+    expect(nextState).toEqual({
+      tasks: [
+        { id: 1, text: 'Task 1', done: true },
+        { id: 2, text: 'Task 2', done: true },
+        { id: 3, text: 'Task 3', done: false },
+      ],
+      value: 3,
+      filteredTasks: [
+        { id: 1, text: 'Task 1', done: true },
+        { id: 2, text: 'Task 2', done: true },
+      ],
+      typeOfFilter: 'completed',
+      hide: false,
+    });
+  });
+  test('hide tasks', () => {
+    const initialState = {
+      tasks: [
+        { id: 1, text: 'Task 1', done: true },
+        { id: 2, text: 'Task 2', done: true },
+        { id: 3, text: 'Task 3', done: false },
+      ],
+      value: 3,
+      filteredTasks: [
+        { id: 1, text: 'Task 1', done: true },
+        { id: 2, text: 'Task 2', done: true },
+        { id: 3, text: 'Task 3', done: false },
+      ],
+      typeOfFilter: 'all',
+      hide: false,
+    };
+    const action = hide();
+    const nextState = tasksSlice.reducer(initialState, action);
+    expect(nextState).toEqual({
+      tasks: [
+        { id: 1, text: 'Task 1', done: true },
+        { id: 2, text: 'Task 2', done: true },
+        { id: 3, text: 'Task 3', done: false },
+      ],
+      value: 3,
+      filteredTasks: [
+        { id: 1, text: 'Task 1', done: true },
+        { id: 2, text: 'Task 2', done: true },
+        { id: 3, text: 'Task 3', done: false },
+      ],
+      typeOfFilter: 'all',
+      hide: true,
     });
   });
 });
