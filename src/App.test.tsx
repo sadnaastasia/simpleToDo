@@ -1,5 +1,7 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import AppWrapper from './AppWrapper';
+import { addTask, deleteDoneTasks, markDone } from './store';
+import { tasksSlice } from './store';
 
 describe('App', () => {
   test('render App', () => {
@@ -7,13 +9,67 @@ describe('App', () => {
     const headerElement = screen.getByText(/todos/i);
     expect(headerElement).toBeInTheDocument();
   });
-  test('add new task', () => {
-    render(<AppWrapper />);
-    const input = screen.getByPlaceholderText('What needs to be done?');
-    const taskText = 'Task';
-    fireEvent.change(input, { target: { value: taskText } });
-    fireEvent.keyUp(input, { key: 'Enter', code: 'Enter', charCode: 13 });
-    const todoItem = screen.getByText(taskText);
-    expect(todoItem).toBeInTheDocument();
+  it('add task', () => {
+    const initialState = {
+      tasks: [],
+      value: 0,
+      filteredTasks: [],
+      typeOfFilter: 'all',
+      hide: false,
+    };
+    const task = { id: 1, text: 'Hi', done: false };
+    const action = addTask(task);
+    const nextState = tasksSlice.reducer(initialState, action);
+    expect(nextState).toEqual({
+      tasks: [{ id: 1, text: 'Hi', done: false }],
+      value: 1,
+      filteredTasks: [{ id: 1, text: 'Hi', done: false }],
+      typeOfFilter: 'all',
+      hide: false,
+    });
+  });
+  it('mark task done', () => {
+    const initialState = {
+      tasks: [{ id: 1, text: 'Hi', done: false }],
+      value: 1,
+      filteredTasks: [{ id: 1, text: 'Hi', done: false }],
+      typeOfFilter: 'all',
+      hide: false,
+    };
+    const action = markDone(1);
+    const nextState = tasksSlice.reducer(initialState, action);
+    expect(nextState).toEqual({
+      tasks: [{ id: 1, text: 'Hi', done: true }],
+      value: 1,
+      filteredTasks: [{ id: 1, text: 'Hi', done: true }],
+      typeOfFilter: 'all',
+      hide: false,
+    });
+  });
+  it('delete done tasks', () => {
+    const initialState = {
+      tasks: [
+        { id: 1, text: 'Hi', done: true },
+        { id: 2, text: 'Hi2', done: true },
+        { id: 3, text: 'Hi3', done: false },
+      ],
+      value: 3,
+      filteredTasks: [
+        { id: 1, text: 'Hi', done: true },
+        { id: 2, text: 'Hi2', done: true },
+        { id: 3, text: 'Hi3', done: false },
+      ],
+      typeOfFilter: 'all',
+      hide: false,
+    };
+    const action = deleteDoneTasks();
+    const nextState = tasksSlice.reducer(initialState, action);
+    expect(nextState).toEqual({
+      tasks: [{ id: 3, text: 'Hi3', done: false }],
+      value: 1,
+      filteredTasks: [{ id: 3, text: 'Hi3', done: false }],
+      typeOfFilter: 'all',
+      hide: false,
+    });
   });
 });
